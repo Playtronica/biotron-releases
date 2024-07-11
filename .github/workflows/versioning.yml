@@ -22,19 +22,18 @@ jobs:
         run: |
             echo "TAG_NAME=`echo '${{ env.COMMIT_TEXT }}' | grep -o 'TAG: [a-zA-Z0-9]*' | cut -d' ' -f2 `" >> $GITHUB_OUTPUT
             echo "RELEASE_NAME=`echo '${{ env.COMMIT_TEXT }}' | head -n 1`" >> $GITHUB_OUTPUT
-            {
-              echo 'BODY_CONTENT<<EOF'
-              echo '${{ env.COMMIT_TEXT }}' | sed -n '/Body: /,/^\$/p' | sed 's/Body: //'
-              echo EOF
-            } >> $GITHUB_OUTPUT
             
-            
-        
       - name: Check vars
         run: |
             echo ${{ steps.newtag.outputs.TAG_NAME }}
             echo ${{ steps.newtag.outputs.RELEASE_NAME }}
-            echo ${{ steps.newtag.outputs.BODY_CONTENT }}
+
+      - uses: CupOfTea696/gh-action-auto-release@v1.0.0
+        with:
+          title: ${{ steps.newtag.outputs.RELEASE_NAME }}
+          tag: ${{ steps.newtag.outputs.TAG_NAME }}
+          changelog-entry: ${{ steps.newtag.outputs.TAG_NAME }}
+          regex: "/^Release #{semver}$/i"
         
       # - name: "Build Firmaware"
       #   run: make build
