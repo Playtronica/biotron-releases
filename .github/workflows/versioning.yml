@@ -22,20 +22,26 @@ jobs:
         run: |
             echo "TAG_NAME=`echo '${{ env.COMMIT_TEXT }}' | grep -o 'TAG: [a-zA-Z0-9]*' | cut -d' ' -f2 `" >> $GITHUB_OUTPUT
             echo "RELEASE_NAME=`echo '${{ env.COMMIT_TEXT }}' | head -n 1`" >> $GITHUB_OUTPUT
+            {
+              echo 'BODY_CONTENT<<EOF'
+              echo '${{ env.COMMIT_TEXT }}' | sed -n '/Body: /,/^\$/p' | sed 's/Body: //'
+              echo EOF
+            } >> $GITHUB_OUTPUT
             
       - name: Check vars
         run: |
-            echo ${{ steps.newtag.outputs.TAG_NAME }}
-            echo ${{ steps.newtag.outputs.RELEASE_NAME }}
+            echo "${{ steps.newtag.outputs.TAG_NAME }}"
+            echo "${{ steps.newtag.outputs.RELEASE_NAME }}"
+            echo "${{ steps.newtag.outputs.BODY_CONTENT }}"
 
-      - uses: CupOfTea696/gh-action-auto-release@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: softprops/action-gh-release@v2
         with:
-          title: ${{ steps.newtag.outputs.RELEASE_NAME }}
-          tag: ${{ steps.newtag.outputs.TAG_NAME }}
-          changelog-entry: ${{ steps.newtag.outputs.TAG_NAME }}
-          regex: "/^Release #{semver}$/i"
+          name: ${{ steps.newtag.outputs.RELEASE_NAME }}
+          tag_name: ${{ steps.newtag.outputs.TAG_NAME }}
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          files: output/*.uf2
+          body: "${{ steps.newtag.outputs.BODY_CONTENT }}"
+          
         
       # - name: "Build Firmaware"
       #   run: make build
