@@ -38,7 +38,7 @@ jobs:
         with:
           name: ${{ steps.newtag.outputs.RELEASE_NAME }}
           tag_name: ${{ steps.newtag.outputs.TAG_NAME }}
-          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           files: output/*.uf2
           body: "${{ steps.newtag.outputs.BODY_CONTENT }}"
           
