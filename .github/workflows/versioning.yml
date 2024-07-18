@@ -20,7 +20,7 @@ jobs:
         env:
           COMMIT_TEXT: ${{ github.event.head_commit.message }}
         run: |
-            echo "TAG_NAME=`echo '${{ env.COMMIT_TEXT }}' | grep -o 'TAG: [a-zA-Z0-9]*' | cut -d' ' -f2 `" >> $GITHUB_OUTPUT
+            echo "TAG_NAME=`echo '${{ env.COMMIT_TEXT }}' | grep -o 'TAG: .*' | cut -d' ' -f2 `" >> $GITHUB_OUTPUT
             echo "RELEASE_NAME=`echo '${{ env.COMMIT_TEXT }}' | head -n 1`" >> $GITHUB_OUTPUT
             {
               echo 'BODY_CONTENT<<EOF'
