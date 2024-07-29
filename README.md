@@ -56,12 +56,10 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#load-firmware">Load Firmware</a></li>
       </ul>
     </li>
-    <li><a href="#commands">MIDI Commands</a></li>
-    <li><a href="#contributing">Contributing</li>
+    <li><a href="#biotrons-continuous-controllers-">Biotron's Continuous Controllers</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -77,6 +75,7 @@ TODO
 ### Built With
 
 * [Raspberry Pi Pico SDK](https://github.com/raspberrypi/pico-sdk)
+* [Docker](https://www.docker.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -84,60 +83,36 @@ TODO
 ## Getting Started
 
 
-### Prerequisites
+### Load Firmware
 
-Install docker, example for Ubuntu 20.04
+For loading device you need firmware file. You can get it in different ways:
+1) Load firmware from [releases](https://github.com/Playtronica/biotron-releases/releases/latest)
+2) Open [WebMidi](https://playtronica.github.io/WebMidiVue/#/biotron) and press "Update Firmware". 
+(It also change device state in boot mode)
 
+After that you need to turn on boot mode on device:
 
-### Build and flash with docker (Recomended way)
+1) If your device is already have one of the latest firmwares - 
+Open [WebMidi](https://playtronica.github.io/WebMidiVue/#/biotron) and press "Update Firmware" 
+(You also get the latest firmware)
+2) If your firmware version is not latest, or you have problems with first method -
+while you are connecting device to PC, lock boot pins
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/Playtronica/Biotron.git
-   ```
-2. Setup build image
-   ```sh
-   make build_image
-   ```
-3. Build binary
-   ```sh
-   make build
-   ```
-4. Boot biotron in bootloader mode
-- TODO
-
-5. Copy `biotron.uf2` from `output` dir to touchme mass storage device  
-   Example:
-    ```sh
-    cp output/biotron.uf2 /media/user/RPI-RP2
-    ```
+The device will be displayed as removable media (like a USB flash drive).
+You should transfer the resulting .uf2 file to the removable media that appeared.
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- COMMANDS -->
 ## Biotron's Continuous Controllers 
+**Continuous Controllers** - MIDI messages, 
+which are used to patch data for parameters.
 
-
-Read more [here](./CC.md)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Get list of Biotron's CC [here](./CC.md)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
 
 
 
@@ -154,7 +129,7 @@ TODO Add license
 <!-- CONTACT -->
 ## Contact
 
-* Project Link: [https://github.com/Playtronica/Biotron](https://github.com/Playtronica/Biotron)
+* Project Link: [https://github.com/Playtronica/biotron-releases](https://github.com/Playtronica/biotron-releases)
 * Our website: [https://playtronica.com/](https://playtronica.com/)
 
 ### Social media
